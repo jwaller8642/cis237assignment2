@@ -45,7 +45,8 @@ namespace cis237assignment2
             /// Create a new instance of a mazeSolver.
             /// </summary>
             MazeSolver mazeSolver = new MazeSolver();
-
+            PrintMaze(maze1);
+            
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
@@ -53,7 +54,7 @@ namespace cis237assignment2
 
             //Create the second maze by transposing the first maze
             char[,] maze2 = transposeMaze(maze1);
-
+            PrintMaze(maze2);
             //Solve the transposed maze.
             mazeSolver.SolveMaze(maze2, X_START, Y_START);
 
@@ -77,8 +78,54 @@ namespace cis237assignment2
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
-            //Write code her to create a transposed maze.
-            return new char[1, 1];
+            //Write code here to create a transposed maze.
+            int countRows = mazeToTranspose.GetLength(0);
+            int countColums = mazeToTranspose.GetLength(1);
+            char[,] transposeMaze = new char[countColums, countRows];
+
+            if (countRows == countColums)
+            {
+                transposeMaze = (char[,]) mazeToTranspose.Clone();
+                for(int i = 1; i < countRows; i++)
+                {
+                    for(int j = 0; j < countColums; j++)
+                    {
+                        char tempTranpose = transposeMaze[i, j];
+                        transposeMaze[i, j] = transposeMaze[j, i];
+                        transposeMaze[j, i] = tempTranpose;
+
+                    }
+                }
+            }
+            else
+            {
+                for( int colums = 0; colums < countColums; colums++)
+                {
+                    for (int rows = 0; rows < countRows; rows++)
+                    {
+                        transposeMaze[colums, rows] = mazeToTranspose[rows, colums];
+
+                    }
+                }
+            }
+
+            return transposeMaze;
+            
+        }
+
+         static void PrintMaze(char[,] printedMaze)
+        {
+             for (int i = 0 ; i < printedMaze.GetLength(0); i++)
+             {
+                 for (int j = 0; j < printedMaze.GetLength(1); j++)
+                 {
+                     Console.Write(printedMaze[i, j] + " ");
+                 }
+                 Console.WriteLine();
+             }
+             Console.WriteLine();
+             Console.WriteLine();
+             Console.ReadKey();
         }
     }
 }
