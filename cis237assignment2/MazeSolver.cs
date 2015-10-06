@@ -20,12 +20,12 @@ namespace cis237assignment2
         char[,] maze;
         int xStart;
         int yStart;
-
+        Boolean mazeSovled = false;
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
         /// </summary>
         public MazeSolver()
-        {}
+        { }
 
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace cis237assignment2
         /// Feel free to change the return type, or add more parameters if you like, but it can be done
         /// exactly as it is here without adding anything other than code in the body.
         /// </summary>
-        public void SolveMaze(char[,] maze, int xStart, int yStart)
+       public char[,] SolveMaze(char[,] maze, int xStart, int yStart)
         {
             //Assign passed in variables to the class level ones. It was not done in the constuctor so that
             //a new maze could be passed in to this solve method without having to create a new instance.
@@ -43,6 +43,16 @@ namespace cis237assignment2
             this.yStart = yStart;
 
             //Do work needed to use mazeTraversal recursive call and solve the maze.
+             mazeSovled = false;
+
+            do
+            {
+                mazeTraversal(xStart, yStart);
+            }
+            while (mazeSovled != true);
+
+            return maze;
+
         }
 
 
@@ -51,9 +61,72 @@ namespace cis237assignment2
         /// Feel free to change the return type if you like, or pass in parameters that you might need.
         /// This is only a very small starting point.
         /// </summary>
-        private void mazeTraversal()
+        private void mazeTraversal(int x, int y)
         {
             //Implement maze traversal recursive call
+
+            int moveUp = x - 1;
+            int moveDown = x + 1;
+            int moveLeft = y - 1;
+            int moveRight = y + 1;
+            try
+            {
+                // checks up Move UP
+                // If we run in to a wall(#) current spot will be marked with an X, 
+                //and then we move in the oposite direction.
+                //or if it is equal to a clearPath(.) it keeps going in that direction. 
+                if (maze[moveUp, y] == '#')
+                {
+                    maze[x, y] = 'X'; 
+                    mazeTraversal(moveDown, y);
+                }
+                else
+                {
+                    maze[x, y] = 'O';
+                    mazeTraversal(moveUp, y);
+                }
+                //checks up Move Down
+                if (maze[moveDown, y] == '#')
+                {
+                    maze[x, y] = 'X';
+                    mazeTraversal(moveUp, y);
+                }
+                else
+                {
+
+                    maze[x, y] = 'O';
+                    mazeTraversal(moveDown, y);
+                }
+                //checks up Move Left
+                if (maze[moveLeft, y] == '#')
+                {
+                    maze[x, y] = 'X';
+                    mazeTraversal(x, moveRight);
+                }
+                else
+                {
+                    maze[x, y] = 'O';
+                    mazeTraversal(x, moveLeft);
+                }
+                //checks up Move Right
+                if (maze[x, moveRight] == '#')
+                {
+                    maze[x, y] = 'X';
+                    mazeTraversal(x, moveLeft);
+                }
+                else
+                {
+
+                    maze[x, y] = 'O';
+                    mazeTraversal(x, moveRight);
+                }
+                
+            }
+            catch (StackOverflowException)
+            {
+                mazeSovled = true;
+            }
+
         }
     }
 }

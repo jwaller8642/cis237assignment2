@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Jason Waller
+//A2
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,8 +58,8 @@ namespace cis237assignment2
             /// <summary>
             /// Tell the instance to solve the first maze with the passed maze, and start coordinates.
             /// </summary>
-            mazeSolver.SolveMaze(maze1, X_START, Y_START);
-
+           char[,] solvedMaze1 = mazeSolver.SolveMaze(maze1, X_START, Y_START);
+           PrintMaze(solvedMaze1);
             
             //Solve the transposed maze.
             mazeSolver.SolveMaze(maze2, X_START, Y_START);
@@ -82,8 +84,10 @@ namespace cis237assignment2
         /// <returns>transposedMaze</returns>
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
-        // help from -http://www.codeproject.com/Articles/793684/Transposing-the-rows-and-columns-of-array-CSharp for transpose method 
             //Write code here to create a transposed maze.
+            
+            
+            
             int countRows = mazeToTranspose.GetLength(0);
             int countColums = mazeToTranspose.GetLength(1);
             char[,] transposeMaze = new char[countColums, countRows];
